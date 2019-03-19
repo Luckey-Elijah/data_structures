@@ -134,9 +134,5 @@ node *set_fire(node *root)
 
 int main()
 {
-    int i, r;
-    node *root = NULL;
-
-    srand(time(NULL));
-
+    
 }
