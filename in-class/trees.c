@@ -53,7 +53,7 @@ node *create_node(int data) // returns a pointer with data passed in node
     ptr->data = data;                   // sets value to data passed
     ptr->left = ptr->right = NULL;      // only need to create this root node
 
-    return ptr;
+    return ptr; 
 }
 
 node *bst_insert(node *root, int data)
