@@ -52,7 +52,7 @@ node *create_node(int data) // returns a pointer with data passed in node
 {
     node *ptr = malloc(sizeof(node));   // allocates space
     ptr->data = data;                   // sets value to data passed
-    ptr->left = ptr->right = NULL;      // only need to create this root node
+    ptr->left = ptr->right = NULL;      // only need to create this root;
 
     return ptr; 
 }
@@ -289,9 +289,69 @@ int recursive_find_max(node *root)
     }
 }
 
+// Return 1 if the trees deffer, 0 otherwise
+int tree_diff(node *a, node *b)
+{
+    if (a== NULL && b==NULL){
+        return 0;
+    }
+    else if (a==NULL || b==NULL){
+        return 1;
+    }
+    else if (a->data != b->data){
+        return 1;
+    }
+    return tree_diff(a->left, b->right)
+}
+
+// Recursive function count how many nodes are greater than a 'key'
+int bst_count_greater(node *root, int key)
+{
+    // no values exist
+    if (root==NULL){
+        return 0;
+    }
+
+    else if (root->data > key){
+        return 1    + bst_count_greater(root->left, key) 
+                    + bst_count_greater(root->right, key);
+    }
+
+    else{
+        return bst_count_greater(root->right, key);
+    }
+}
+
 int main()
 {
     // insert driver code here
 
     // ask user what node they want to delete
 }
+
+// AVL trees are self-balancing awesome tree. An AVL tree is a BST which
+// is balanced. An AVL tree is balanced if every node has a balance 
+// factor of -1, 0, or 1. The BF of a node is its left subtree height 
+// minus its right subtree height
+
+//             [35]     
+//            /    \    
+//         [20]    [40] 
+//        /    \        
+//     [10]    [25]     
+
+// ========================
+
+//             [a]             [b]
+//            /               /   \ 
+//         [b]    right->  [c]     [a]
+//        /    rotation @ root
+//     [c]
+
+// GOLDEN RULES:
+
+//     1. if the BF of a node is +2, this means that this tree is
+//     left-heavy (or left subtree is greater than right subtree)
+//     2. check the BF of the left child. If it is +1, a right rotation.
+//     3. But if the BF factor of left child is -1, perform a left-right
+//     rotation
