@@ -1,3 +1,7 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+
 // Search operation in a BST for key 'k'
 
 // Best case:   O(1)
@@ -37,9 +41,6 @@
 //     -  find max value of the left subtree. Then delete that value 
 //        from the left subtree.
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 
 // struct for the node object
 typedef struct node
