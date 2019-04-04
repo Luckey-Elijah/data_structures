@@ -416,11 +416,6 @@ node *avl_balance(node *root)
     return root;
 }
 
-// node *avl_insert()
-// {
-
-// }
-
 int main()
 {
     // insert driver code here
