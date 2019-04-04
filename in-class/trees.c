@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#define VERBOSE 1
 
 // Search operation in a BST for key 'k'
 
@@ -322,6 +323,103 @@ int bst_count_greater(node *root, int key)
         return bst_count_greater(root->right, key);
     }
 }
+
+typedef struct node
+{
+    int height, data;
+    struct node *left, *right;
+}node;
+
+node *create_node(int data){
+    node *n = malloc(sizeof(node));
+
+    n->data = data;
+    n->left = n->right = NULL;
+    n->height = 0;
+    if(VERBOSE)
+        printf("    Inserted %d\n", data);
+    
+    return n;
+}
+
+int height_of(node *root){
+    return (root == NULL) ? -1 : root->height;
+}
+
+int balance_factor(node *root){
+    return height_of(root->left) - height_of(root->right);
+}
+
+node *single_right(node *root)
+{
+    // holding the root's right child
+    node *temp = root->left;
+
+    // root is moving to the left and loosing its right child
+    // take the new root's orphaned left child
+    root->left = temp->right;
+
+    // right child moves up to take the place of the root
+    temp->right = root;
+
+    // update balance factor of each node
+    root->height = 1+max(height_of(root->left), height_of(root->right));
+    temp->height = 1+max(height_of(temp->left), height_of(temp->right));
+
+    if (VERBOSE){
+        printf("    (Performed single right rotation at node %d)\n", 
+        root->data);}
+}
+
+// perform a single left rotation at specified node
+node *single_left(node *root)
+{
+    // holding the root's right child
+    node *temp = root->right;
+
+    // root is moving to the left and loosing its right child
+    // take the new root's orphaned left child
+    root->right = temp->left;
+
+    // right child moves up to take the place of the root
+    temp->left = root;
+
+    // update balance factor of each node
+    root->height = 1+max(height_of(root->left), height_of(root->right));
+    temp->height = 1+max(height_of(temp->left), height_of(temp->right));
+
+    if (VERBOSE){
+        printf("    (Performed single left rotation at node %d)\n", 
+        root->data);}
+}
+
+node *avl_balance(node *root)
+{
+    // calc the balance factor of root
+    int bf = balance_factor(root);
+
+    // AVL
+    if (bf == -2){
+        if (balance_factor(root->right) > 0) {
+            root->right = single_right(root->right);
+        }
+        
+    }
+
+    if (bf == 2){
+        if (balance_factor(root->left) < 0){
+            root->left = single_left(root->left);
+        }
+        root = single_right(root);
+    }
+
+    return root;
+}
+
+// node *avl_insert()
+// {
+
+// }
 
 int main()
 {
