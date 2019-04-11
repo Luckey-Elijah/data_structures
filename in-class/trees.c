@@ -48,6 +48,7 @@ typedef struct node
 {
     int data;                   // value stored in node
     struct node *left, *right;  // pointers to next node
+    
 }node;
 
 node *create_node(int data) // returns a pointer with data passed in node 
