@@ -7,3 +7,8 @@
 //     - percolate down
 //     - O(logn)
 
+typedef struct heap
+{
+    int[] *array_heap;
+    int capacity heap_size;
+};
