@@ -27,22 +27,34 @@
 
 typedef struct node
 {
+	// nodes have left and right children nodes
+	struct node *right;
+	struct node *left;
+	
 	// nodes contain numerical data
 	int data;
-
-	// nodes have left and right children nodes
-	struct node *left;
-	struct node *right;
 }node;
+
+void print_node_data(node *root)
+{
+	if (!(root->data))
+	{
+		// If there is ever no data in the node, it won't print
+		printf("ROOT->DATA is NULL\n");
+		return;
+	}
+
+	printf("%d ", root->data);
+}
 
 int *random_arr_generator(int a_size)
 {
 	srand(time(0));
-	printf("calling random_arr_generator(%d)\n", a_size);
+	// printf("calling random_arr_generator(%d)\n", a_size);
 	
 	// initialize values and array
 	int i, temp_n;
-	int *random_arr;
+	int *random_arr = malloc((sizeof(int)) * a_size);
 
 	// loop that populates the array
 	for (i = 0; i <= a_size; i++) {
@@ -51,26 +63,16 @@ int *random_arr_generator(int a_size)
 
 		// random value stored here
 		random_arr[i] = temp_n;
+		printf("%d, ", temp_n);
   }
 
-	// printf("random_arr_generator() SUCCESS\n");
+	printf("\n");
 	return random_arr;
 }
 
-void print_array(int *array, int arr_size)
+struct node *create_node(int new_data)
 {
-	int i;
-	printf("Array for inserting: ");
-	for (i = 0; i < arr_size; i++)
-	{
-		printf("%d, ", array[i]);
-	}
-	printf("\n");
-}
-
-node *create_node(int new_data)
-{
-	node *new_node= malloc(sizeof(node));
+	struct node *new_node= malloc(sizeof(node));
 	new_node->data = new_data;
 	new_node->left = new_node->right = NULL; 
 
@@ -79,58 +81,140 @@ node *create_node(int new_data)
 
 node *insert_node(node *root, int new_data)
 {
-	printf("insert_node(root: %d, data: %d)\n", root->data, new_data);
+	// printf("insert_node(root: %d, data: %d)\n", root->data, new_data);
 	if (root == NULL)
 	{
+		// printf("INSERTED: %d\n", new_data);
 		return create_node(new_data);
-		printf("INSERTED\n");
 	}
-
+	// LESS-THAN
 	else if (new_data < root->data)
 	{
+		// printf("INSERTED: %d\n", new_data);
 		root->left = insert_node(root->left, new_data);
-		printf("INSERTED\n");
+		// printf("INSERTED\n");
 	}
-
+	// GREATER-THAN
 	else if (new_data > root->data)
 	{
+		// printf("INSERTED: %d\n", new_data);
 		root->right = insert_node(root->right, new_data);
-		
 	}
 	else
 	{
-		;
+		// printf("did not INSERT %d. Already exists.\n", new_data);
 	}
-
+	
 }
 
-node *create_tree(int *node_array, int num_nodes)
+struct node *create_tree(int *node_array, int num_nodes)
 {
-	printf("create_tree(size: %d)\n", num_nodes);
+	// printf("create_tree(size: %d)\n", num_nodes);
 	if (node_array == NULL) {
 		// case that the array is empty 
+		printf("ARRAY given is NULL\n");
 		return NULL;
 	}
 
-	node *root = create_node(node_array[0]);
+	// creates the root node
+	node *root = create_node(node_array[0]); 
+	printf("INSERTED: %d\n", node_array[0]);
+	
 	int i;
-
 	for (i = 1; i < num_nodes; i++)
 	{
+		// INSERTS new node into tree
+		printf("INSERTED: %d\n", node_array[i]);
 		root = insert_node(root, node_array[i]);
 	}
 
+	// printf("exit create_tree\n");
 	return root;
+}
+
+void inorder_traversal(node *root)
+{
+	if (root == NULL)
+	{
+		// NULL root value, exits
+		return;
+	}
+
+	// does traversal: INORDER
+	inorder_traversal(root->left);
+	print_node_data(root);
+	inorder_traversal(root->right);
+}
+
+void preorder_traversal(node *root)
+{
+	if (root == NULL)
+	{
+		// NULL root value, exits
+		return;
+	}
+
+	// does traversal: PREORDER
+	print_node_data(root);
+	preorder_traversal(root->left);
+	preorder_traversal(root->right);
+}
+
+void postorder_traversal(node *root)
+{
+	if (root == NULL)
+	{
+		// NULL root value, exits
+		return;
+	}
+
+	// does traversal: POSTERDER
+	postorder_traversal(root->left);
+	postorder_traversal(root->right);
+	print_node_data(root);
+}
+
+void traversals(node *root)
+{
+	if (!root)
+	{
+		printf("ROOT is NULL\n");
+		return;
+	}
+
+	printf("\ninorder_traversal: ");
+	inorder_traversal(root);
+
+	printf("\npostorder_traversal: ");
+	postorder_traversal(root);
+
+	printf("\npreorder_traversal: ");
+	preorder_traversal(root);
+}
+
+// removes all nodes in a tree and "burns" them
+node *set_fire(node *root)
+{
+    if (root == NULL)       // NULL condition
+        return NULL;
+
+    set_fire(root->left);   // traverse left
+    set_fire(root->right);  // traverse right
+    free(root);             // then remove
+
+    return NULL;
 }
 
 int main(int argc, char const *argv[])
 {
 	// driver code for creating BSTs
-	int num_nodes = 5, i;
+	int num_nodes = 10;
 	int *node_values = random_arr_generator(num_nodes);
 
-	print_array(node_values, num_nodes);
-
 	node *root = create_tree(node_values, num_nodes);
+	traversals(root);
+
+	root = set_fire(root);
+
 	return 0;
 }
