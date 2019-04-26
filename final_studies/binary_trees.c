@@ -4,12 +4,14 @@
 
 // Topics covered:
 
-// 	- differences bewtween trees, binary trees, and binary search trees.
+// 	- differences between trees, binary trees, and binary search trees.
 // 	- efficiency of insertion, look-up, search, etc. in binary trees vs BST.
 // 	- runtimes of BST operations, and details of why.
 
 // 	- define "complete binary tree" 
+// 		- a complete binary tree is one that where every "level" is completely filled execpt possibly the last level; in that case the last level must have nodes that are in left most positions
 // 	- height of a complete binary tree with n nodes
+// 		- the height of a binary tree can be calculated calculated 
 // 	- define a "full" binary tree
 // 	- define a "perfect" binary tree
 
@@ -19,11 +21,6 @@
 // 		- recursive
 // 		- iterative
 // 		- etc
-
-// 	- traversals:
-// 		- in-order
-// 		- pre-order
-// 		- post-order
 
 typedef struct node
 {
