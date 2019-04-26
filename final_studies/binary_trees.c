@@ -101,7 +101,7 @@ node *insert_node(node *root, int new_data)
 	{
 		// printf("did not INSERT %d. Already exists.\n", new_data);
 	}
-	
+	return root;
 }
 
 struct node *create_tree(int *node_array, int num_nodes)
