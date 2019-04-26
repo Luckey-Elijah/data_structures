@@ -5,22 +5,23 @@
 // Topics covered:
 
 // 	- differences between trees, binary trees, and binary search trees.
+//  	- a tree implies that there is a node and the can have children
+//		- a binary tree implies that there are nodes and each node can have most 2 children
+// 		- a binary search tree implies that there are nodes and each node can have at most 2 children. each children node is sorted based on the data stored in the parent nodes
 // 	- efficiency of insertion, look-up, search, etc. in binary trees vs BST.
+// 		- a binary search tree has a look 
 // 	- runtimes of BST operations, and details of why.
+// 		-
 
 // 	- define "complete binary tree" 
 // 		- a complete binary tree is one that where every "level" is completely filled execpt possibly the last level; in that case the last level must have nodes that are in left most positions
 // 	- height of a complete binary tree with n nodes
 // 		- the height of a binary tree can be calculated calculated 
 // 	- define a "full" binary tree
+// 		- a full binary tree is when EVERY node has either 0 or 2 children nodes
 // 	- define a "perfect" binary tree
+// 		- a perfect binary tree is when all "internal" nodes have two children and all leaves are at the same level
 
-// 	- function: insertion_bst()
-// 	- function: deletion_bst()
-// 	- write functions on BST
-// 		- recursive
-// 		- iterative
-// 		- etc
 
 typedef struct node
 {
