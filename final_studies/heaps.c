@@ -34,9 +34,23 @@
     // - priority queue
     // - graph algorithms: such as Dijkstra's shortest path and Prim's minimum spanning tree
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 
-void swap(int *x, int *y);
+typedef struct minHeap
+{
+    // array all the values
+    int *h_arr;
 
-typedef struct
+    // MAX amount of values
+    int capacity;
+
+    //  current number of values in the heap
+    int heap_size;
+
+}minHeap;
+
+
+int 
