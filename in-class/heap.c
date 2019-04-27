@@ -9,6 +9,6 @@
 
 typedef struct heap
 {
-    int[] *array_heap;
-    int capacity heap_size;
-};
+    int *array_heap;
+    int capacity, heap_size;
+}heap;

@@ -7,6 +7,7 @@
 
 typedef struct trieNode
 {
+    // specific to alphabetical tries
     struct trieNode *children[26];
     int count;
 }trieNode;
